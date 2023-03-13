@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 
 namespace ex027
@@ -16,9 +17,13 @@ namespace ex027
         public const ConsoleKey SAIR = ConsoleKey.Escape;
         public const ConsoleKey ESPACO = ConsoleKey.Spacebar;
         public const ConsoleKey ENTER = ConsoleKey.Enter;  
-        public byte x = 0;
-        public byte y = 0;
-        public bool IsCliked = false;
+        public Posicao2D Posicao { get; }
+        public bool EstaClicado = false;
+
+        public Teclado(Posicao2D posicao)
+        {
+            this.Posicao = posicao;
+        }
         public void AtualizarPosicaoDoTeclado()
         {
             var key = Console.ReadKey().Key;
@@ -26,77 +31,79 @@ namespace ex027
             {
                 //Movimentaco com teclas (WSAD)
                 case (W):
-                    if (this.y > 0)
+                    if (this.Posicao.Y > 0)
                     {
-                        this.y--;
+                        this.Posicao.Y--;
                     }
                     break;
 
                 case (S):
-                    if (this.y < 2)
+                    if (this.Posicao.Y < 2)
                     {
-                        this.y++;
+                        this.Posicao.Y++;
                     }
                     break;
 
                 case (A):
-                    if (this.x > 0)
+                    if (this.Posicao.X > 0)
                     {
-                        this.x--;
+                        this.Posicao.X--;
                     }
                     break;
 
                 case (D):
-                    if (this.x < 2)
+                    if (this.Posicao.X < 2)
                     {
-                        this.x++;
+                        this.Posicao.X++;
                     }
                     break;
 
                 //Movimentacao com setas
                 case (CIMA):
-                    if (this.y > 0)
+                    if (this.Posicao.Y > 0)
                     {
-                        this.y--;
+                        this.Posicao.Y--;
                     }
                     break;
 
                 case (BAIXO):
-                    if (this.y < 2)
+                    if (this.Posicao.Y < 2)
                     {
-                        this.y++;
+                        this.Posicao.Y++;
                     }
                     break;
 
                 case (ESQUERDA):
-                    if (this.x > 0)
+                    if (this.Posicao.X > 0)
                     {
-                        this.x--;
+                        this.Posicao.X--;
                     }
                     break;
 
                 case (DIREITA):
-                    if (this.x < 2)
+                    if (this.Posicao.X < 2)
                     {
-                        this.x++;
+                        this.Posicao.X++;
                     }
                     break;
 
                 case (ESPACO):
-                    Click();
+                    this.EstaClicado = true;
                     break;
 
                 case (ENTER):
-                    Click();
+                    this.EstaClicado = true;
                     break;
                 default:
                     break;
             }
 
         }
-        private void Click()
+        public bool Click()
         {
-            this.IsCliked = true;
+            bool clicado = this.EstaClicado;
+            this.EstaClicado = false;
+            return clicado;
         }
     }
 }
